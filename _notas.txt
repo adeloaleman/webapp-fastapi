@@ -1,0 +1,9 @@
+This's been done based on a course from Eric Roby at his youtube channel:
+How to build a NextJS + FastAPI application (step-by-step tutorial) https://www.youtube.com/watch?v=g566eI2EmeY
+
+
+To run the fastapi app:
+fastapi run main.py --port 8000    # With the new[standard] version - fastapi[standard]==0.112.0
+uvicorn main:app --reload          # It used to be done this way
+
+

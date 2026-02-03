@@ -1,10 +1,10 @@
 import os
 from dotenv import load_dotenv
 from datetime import datetime, timezone, timedelta
-from typing import Optional, Annotated
+from typing import Annotated, Optional
 from pydantic import BaseModel
 from jose import jwt, JWTError
-from fastapi import APIRouter, status, HTTPException, Depends
+from fastapi import APIRouter, HTTPException, status, Depends
 from fastapi.security import OAuth2PasswordRequestForm
 from api.models import User
 from api.deps import db_dependency, user_dependency, bcrypt_context
@@ -46,7 +46,7 @@ def authenticate_user(db:db_dependency, username:str, password:str):
 
 def create_access_token(id:str, username:str, name:str, expires_delta:timedelta):
     encode = {'id':id, 'username':username, 'name':name}
-    expires = datetime.now(timezone.utc) + expires_delta
+    expires = datetime.now(tz=timezone.utc) + expires_delta
     encode.update({'exp':expires})
     return jwt.encode(encode, key=AUTH_SECRET_KEY, algorithm=AUTH_ALGORITHM)
 
@@ -61,7 +61,7 @@ async def register_user(db:db_dependency, register_user_request:RegisterUserRequ
 
 @router.post('/token', response_model=AccessToken)
 async def login_for_access_token(db:db_dependency, form_data:Annotated[OAuth2PasswordRequestForm, Depends()]):
-    user = authenticate_user(db=db, username=form_data.username, password=form_data.password)
+    user:User = authenticate_user(db=db, username=form_data.username, password=form_data.password)
     if not user:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Could not validate user')
     return {
