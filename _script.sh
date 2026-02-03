@@ -44,6 +44,7 @@ git remote add origin git@github-codeastute:codeastute/webapp-fastapi.git
 git remote set-url origin git@github.com:adeloaleman/webapp-fastapi.git  # In case we want to modify it
 git remote show origin  # To show the configured remote repository
 git push -u origin main 
+git push --force origin main  # In case we have another local repository pushing to the same remote repository, we'll only be able to push by using the --force flag. This is only to be used when we are SURE that we want to overwrite the remote branch with our local state
 git push
 
 
