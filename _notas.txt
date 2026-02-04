@@ -7,3 +7,4 @@ fastapi run main.py --port 8000    # With the new[standard] version - fastapi[st
 uvicorn main:app --reload          # It used to be done this way
 
 
+ 
